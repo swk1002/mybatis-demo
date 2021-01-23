@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!--1.这个文件就是映射配置文件-->
+<!--2.mybatis的映射配置文件位置必须和dao接口的包结构相同，并且在创建目录时候需要一级一级创建-->
+
+<!--3.mapper标签的namespace属性取值必须是dao接口的全限定类名-->
+<mapper namespace="com.kong.dao.IUserDao">
+    <!--4.这个id是对应接口里方法的名字，不可以随意写-->
+    <select id="findAll" resultType="com.kong.domain.User"> <!--id="findAll" ,配置查询所有-->
+        select * from user
+    </select>
+</mapper>

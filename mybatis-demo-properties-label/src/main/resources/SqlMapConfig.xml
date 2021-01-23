@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+
+<!-- 这个xml文件是mybatis的主配置文件-->
+<configuration>
+    <!--通过properties标签来指定配置文件所在位置。有两种方式：
+        1.通过resource标签指定，当前类路径下的位置
+        2.通过url的方式来指定
+     -->
+    <properties resource="jdbcConfig.properties"/>
+    <!--<properties url="file:///I:/dev/ideaC2018.3/workspace/mybatis-study/mybatis-demo-properties-label/src/main/resources/jdbcConfig.properties"/>-->
+    <environments default="mysql"> <!-- 默认使用的是“mysql”环境?-->
+        <environment id="mysql">
+            <transactionManager type="JDBC"/>
+            <dataSource type="POOLED">
+                <!--通过${}的格式获取配置文件里的值，其中{}里面的内容要跟配置文件里的一致。-->
+                <property name="driver" value="${jdbc.driver}"/>
+                <property name="url" value="${jdbc.url}"/>
+                <property name="username" value="${jdbc.username}"/>
+                <property name="password" value="${jdbc.password}"/>
+            </dataSource>
+        </environment>
+    </environments>
+
+    <!-- 指定映射配置文件的位置，映射配置文件是指每个dao独立的配置文件-->
+    <mappers>
+        <mapper resource="com/kong/dao/IUserDao.xml"/>
+    </mappers>
+</configuration>

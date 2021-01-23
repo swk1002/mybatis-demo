@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!--1.这个文件就是映射配置文件-->
+<!--2.mybatis的映射配置文件位置必须和dao接口的包结构相同，并且在创建目录时候需要一级一级创建-->
+
+<!--3.mapper标签的namespace属性取值必须是dao接口的全限定类名-->
+<mapper namespace="com.kong.dao.IUserDao">
+
+    <!-- 根据条件查询方式一 -->
+    <!--<select id="findByCondition" parameterType="com.kong.domain.User" resultType="com.kong.domain.User">-->
+        <!--select * from user where 1=1-->
+        <!--<if test="username != null">-->
+            <!--and username = #{username}-->
+        <!--</if>-->
+        <!--<if test="address != null">-->
+            <!--and address = #{address}-->
+        <!--</if>-->
+    <!--</select>-->
+
+    <!-- 根据条件查询方式二 使用where标签 -->
+    <select id="findByCondition" parameterType="com.kong.domain.User" resultType="com.kong.domain.User">
+        select * from user
+        <where>
+            <if test="username != null">
+                and username = #{username}
+            </if>
+            <if test="address != null">
+                and address = #{address}
+            </if>
+        </where>
+    </select>
+
+<!--根据QueryVo提供的用户列表来进行查询，使用foreach标签 -->
+    <!-- select * from user where id in () -->
+    <select id="findUserInIds" parameterType="com.kong.domain.QueryVo" resultType="com.kong.domain.User">
+        select * from user
+        <where>
+            <if test="userids != null and userids.size()>0">
+                <foreach collection="userids" open="and id in (" close=")" item="userid" separator=",">
+                    <!-- #{userid}对应的是 item="userid" -->
+                    #{userid}
+                </foreach>
+            </if>
+        </where>
+    </select>
+</mapper>
